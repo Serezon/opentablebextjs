@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { Metadata } from "next";
+import prisma from "../../../../prisma/client";
 import RestaurantMenu from "../components/RestaurantMenu";
 import RestaurantNavbar from "../components/RestaurantNavbar";
 
@@ -12,8 +12,6 @@ interface Props {
     slug: string;
   };
 }
-
-const prisma = new PrismaClient();
 
 const fetchRestaurantMenu = async (slug: string) => {
   const restaurant = await prisma.restaurant.findUnique({

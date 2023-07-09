@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
 import { Metadata } from "next";
+import prisma from "../../../prisma/client";
 import RestaurantDescription from "./components/RestaurantDescription";
 import RestaurantImages from "./components/RestaurantImages";
 import RestaurantNavbar from "./components/RestaurantNavbar";
@@ -11,8 +11,6 @@ import RestaurantTitle from "./components/RestaurantTitle";
 export const metadata: Metadata = {
   title: "Milesstone Grill",
 };
-
-const prisma = new PrismaClient();
 
 interface IRestaurant {
   id: number;

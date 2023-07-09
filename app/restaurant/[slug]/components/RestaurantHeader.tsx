@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../../../../prisma/client";
 
 const fetchRestaurantNameBySlug = async (slug: string): Promise<string> => {
   const restaurant = await prisma.restaurant.findUnique({
