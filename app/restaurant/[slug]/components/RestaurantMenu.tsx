@@ -1,7 +1,12 @@
+import { Item } from "@prisma/client";
 import type { ReactElement } from "react";
 import RestaurantMenuCard from "./RestaurantMenuCard";
 
-export default function RestaurantMenu(): ReactElement {
+interface Props {
+  menu: Item[];
+}
+
+export default function RestaurantMenu({ menu }: Props): ReactElement {
   return (
     <main className="mt-5 bg-white">
       <div>
@@ -9,7 +14,11 @@ export default function RestaurantMenu(): ReactElement {
           <h1 className="text-4xl font-bold">Menu</h1>
         </div>
         <div className="flex flex-wrap justify-between">
-          <RestaurantMenuCard />
+          {menu.length ? (
+            menu.map((item) => <RestaurantMenuCard key={item.id} item={item} />)
+          ) : (
+            <p>This restaurant has no menu yet.</p>
+          )}
         </div>
       </div>
     </main>

@@ -1,35 +1,19 @@
 import type { ReactElement } from "react";
 
-export default function RestaurantImages(): ReactElement {
+interface Props {
+  images: string[];
+}
+
+export default function RestaurantImages({ images }: Props): ReactElement {
   return (
     <div>
-      <h1 className="mt-10 mb-7 border-b pb-5 text-3xl font-bold">5 photos</h1>
+      <h1 className="mt-10 mb-7 border-b pb-5 text-3xl font-bold">
+        {images.length} photo{images.length > 1 && "s"}
+      </h1>
       <div className="flex flex-wrap">
-        <img
-          className="mr-1 mb-1 h-44 w-56"
-          src="https://resizer.otstatic.com/v2/photos/xlarge/3/41701449.jpg"
-          alt=""
-        />
-        <img
-          className="mr-1 mb-1 h-44 w-56"
-          src="https://resizer.otstatic.com/v2/photos/xlarge/2/41701450.jpg"
-          alt=""
-        />
-        <img
-          className="mr-1 mb-1 h-44 w-56"
-          src="https://resizer.otstatic.com/v2/photos/xlarge/2/41701452.jpg"
-          alt=""
-        />
-        <img
-          className="mr-1 mb-1 h-44 w-56"
-          src="https://resizer.otstatic.com/v2/photos/xlarge/2/41701453.jpg"
-          alt=""
-        />
-        <img
-          className="mr-1 mb-1 h-44 w-56"
-          src="https://resizer.otstatic.com/v2/photos/xlarge/2/41701454.jpg"
-          alt=""
-        />
+        {images.map((image) => (
+          <img key={image} className="mr-1 mb-1 h-44 w-56" src={image} alt="" />
+        ))}
       </div>
     </div>
   );
