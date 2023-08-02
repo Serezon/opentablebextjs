@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import prisma from "../../../../prisma/client";
 import RestaurantMenu from "../components/RestaurantMenu";
 import RestaurantNavbar from "../components/RestaurantNavbar";
@@ -24,7 +25,7 @@ const fetchRestaurantMenu = async (slug: string) => {
   });
 
   if (!restaurant) {
-    throw new Error("Restaurant not found");
+    notFound();
   }
 
   return restaurant.items;

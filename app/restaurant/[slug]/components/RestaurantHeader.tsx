@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import prisma from "../../../../prisma/client";
 
 const fetchRestaurantNameBySlug = async (slug: string): Promise<string> => {
@@ -11,7 +12,7 @@ const fetchRestaurantNameBySlug = async (slug: string): Promise<string> => {
   });
 
   if (!restaurant) {
-    throw new Error("Restaurant not found");
+    notFound();
   }
 
   return restaurant.name;

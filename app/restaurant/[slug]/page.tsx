@@ -1,4 +1,6 @@
+import {Review} from "@prisma/client";
 import { Metadata } from "next";
+import {notFound} from "next/navigation";
 import prisma from "../../../prisma/client";
 import RestaurantDescription from "./components/RestaurantDescription";
 import RestaurantImages from "./components/RestaurantImages";
@@ -18,6 +20,7 @@ interface IRestaurant {
   images: string[];
   description: string;
   slug: string;
+  reviews: Review[];
 }
 
 const fetchRestaurantBySlug = async (slug: string): Promise<IRestaurant> => {
@@ -31,11 +34,15 @@ const fetchRestaurantBySlug = async (slug: string): Promise<IRestaurant> => {
       images: true,
       description: true,
       slug: true,
+      reviews: true,
     },
   });
+  
+  // await 500ms
+  await new Promise((resolve) => setTimeout(resolve, 500));
 
   if (!restaurant) {
-    throw new Error("Restaurant not found");
+    notFound();
   }
 
   return restaurant;
@@ -55,10 +62,10 @@ export default async function RestaurantDetails({ params: { slug } }: Props) {
       <div className="w-[70%] rounded bg-white p-3 shadow">
         <RestaurantNavbar slug={restaurant.slug} />
         <RestaurantTitle name={restaurant.name} />
-        <RestaurantRating />
+        <RestaurantRating reviews={restaurant.reviews} />
         <RestaurantDescription description={restaurant.description} />
         <RestaurantImages images={restaurant.images} />
-        <RestaurantReviews />
+        <RestaurantReviews reviews={restaurant.reviews} />
       </div>
       <div className="relative w-[27%] text-reg">
         <RestaurantReservationCard />

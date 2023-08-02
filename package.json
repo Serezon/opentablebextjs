@@ -12,6 +12,9 @@
     "seed": "ts-node --transpile-only prisma/seed.ts"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.3",
     "@next/font": "13.4.7",
     "@prisma/client": "^4.8.1",
     "@types/react": "18.2.14",

@@ -25,9 +25,9 @@ model Restaurant {
   location    Location @relation(fields: [location_id], references: [id])
   cuisine_id  Int
   cuisine     Cuisine  @relation(fields: [cuisine_id], references: [id])
+  reviews     Review[]
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  reviews     Review[]
 }
 
 model Item {
@@ -69,6 +69,8 @@ model Review {
   rating        Float
   restaurant    Restaurant @relation(fields: [restaurant_id], references: [id])
   restaurant_id Int
+  first_name    String
+  last_name     String
   user          User       @relation(fields: [user_id], references: [id])
   user_id       Int
   created_at    DateTime   @default(now())
@@ -82,6 +84,7 @@ model User {
   city       String
   email      String
   phone      String
+  password   String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   reviews    Review[]

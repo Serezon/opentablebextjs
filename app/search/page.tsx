@@ -1,4 +1,4 @@
-import { Cuisine, PRICE, Location } from "@prisma/client";
+import { Cuisine, PRICE, Location, Review } from "@prisma/client";
 import { Metadata } from "next";
 import prisma from "../../prisma/client";
 import SearchHeader from "./components/SearchHeader";
@@ -17,6 +17,7 @@ export interface IRestaurantCard {
   location: Location;
   price: PRICE;
   slug: string;
+  reviews: Review[];
 }
 
 const fetchRestaurants = (params: ISearchParams) => {
@@ -58,6 +59,7 @@ const fetchRestaurants = (params: ISearchParams) => {
       location: true,
       price: true,
       slug: true,
+      reviews: true,
     },
   };
 
