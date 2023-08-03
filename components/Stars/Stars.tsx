@@ -17,7 +17,7 @@ export default function Stars({ reviews = [], rating }: Props): ReactElement {
   const renderStars = () => {
     const stars = [];
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 0; i < 5; i++) {
       const difference = parseFloat((calculatedRating - i).toFixed(1));
       if (difference >= 1) {
         stars.push(fullStar);
