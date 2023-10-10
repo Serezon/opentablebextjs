@@ -24,7 +24,7 @@ type TAuthState = TData & {
 };
 
 export const AuthContext = createContext<TAuthState>({
-  loading: false,
+  loading: true,
   error: null,
   data: null,
   setAuthState: () => {},
@@ -32,7 +32,7 @@ export const AuthContext = createContext<TAuthState>({
 
 export default function AuthContextProvider({ children }: { children: React.ReactNode }) {
   const [authState, setAuthState] = useState<TData>({
-    loading: false,
+    loading: true,
     error: null,
     data: null,
   });

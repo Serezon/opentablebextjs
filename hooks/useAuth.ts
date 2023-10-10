@@ -1,6 +1,7 @@
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
+import { deleteCookie } from "cookies-next";
 
 type TSignInParams = {
   email: string;
@@ -17,7 +18,7 @@ type TSignUpParams = {
 };
 
 export default function useAuth() {
-  const { data, error, loading, setAuthState } = useContext(AuthContext);
+  const { setAuthState } = useContext(AuthContext);
 
   const signIn = async ({ email, password }: TSignInParams, onSuccess?: () => void) => {
     setAuthState({
@@ -71,8 +72,19 @@ export default function useAuth() {
     }
   };
 
+  const signOut = async () => {
+    deleteCookie("jwt");
+
+    setAuthState({
+      data: null,
+      error: null,
+      loading: false,
+    });
+  };
+
   return {
     signIn,
     signUp,
+    signOut,
   };
 }

@@ -1,6 +1,6 @@
-import {Review} from "@prisma/client";
+import { Review } from "@prisma/client";
 import { Metadata } from "next";
-import {notFound} from "next/navigation";
+import { notFound } from "next/navigation";
 import prisma from "../../../prisma/client";
 import RestaurantDescription from "./components/RestaurantDescription";
 import RestaurantImages from "./components/RestaurantImages";
@@ -21,6 +21,8 @@ interface IRestaurant {
   description: string;
   slug: string;
   reviews: Review[];
+  open_time: string;
+  close_time: string;
 }
 
 const fetchRestaurantBySlug = async (slug: string): Promise<IRestaurant> => {
@@ -35,9 +37,11 @@ const fetchRestaurantBySlug = async (slug: string): Promise<IRestaurant> => {
       description: true,
       slug: true,
       reviews: true,
+      open_time: true,
+      close_time: true,
     },
   });
-  
+
   // await 500ms
   await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -68,7 +72,10 @@ export default async function RestaurantDetails({ params: { slug } }: Props) {
         <RestaurantReviews reviews={restaurant.reviews} />
       </div>
       <div className="relative w-[27%] text-reg">
-        <RestaurantReservationCard />
+        <RestaurantReservationCard
+          openTime={restaurant.open_time}
+          closeTime={restaurant.close_time}
+        />
       </div>
     </>
   );

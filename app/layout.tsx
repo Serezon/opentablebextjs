@@ -1,7 +1,9 @@
 import { Metadata } from "next";
-import Layout from "../components/Layout/Layout";
 import "./globals.css";
+import Layout from "../components/Layout/Layout";
 import AuthContextProvider from "../context/AuthContext";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 export const metadata: Metadata = {
   title: {
