@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
+import { setCookie } from "cookies-next";
 import prisma from "../../../prisma/client";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -82,7 +83,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .setExpirationTime("24h")
       .sign(secret);
 
-    return res.status(200).json({ token });
+    setCookie("jwt", token, { req, res, maxAge: 60 * 60 * 24 });
+
+    return res.status(200).json({
+      id: newUser.id,
+      firstName: newUser.first_name,
+      lastName: newUser.last_name,
+      email: newUser.email,
+      city: newUser.city,
+      phone: newUser.phone,
+    });
   }
 
   return res.status(405).json({ message: "Method not allowed" });

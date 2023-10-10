@@ -3,6 +3,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
 import prisma from "../../../prisma/client";
+import { setCookie } from "cookies-next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
@@ -12,21 +13,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const validationSchema = [
       {
         valid: () => validator.isEmail(email),
-        errorMessage: "Email is invalid",
       },
       {
         valid: () => validator.isLength(password, { min: 8 }),
-        errorMessage: "Password is invalid",
       },
     ];
 
     validationSchema.forEach((validation) => {
       try {
         if (!validation.valid()) {
-          errors.push(validation.errorMessage);
+          errors.push("Email or password is invalid");
         }
       } catch (e) {
-        errors.push(validation.errorMessage);
+        errors.push("Email or password is invalid");
       }
     });
 
@@ -59,7 +58,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       .setExpirationTime("24h")
       .sign(secret);
 
-    return res.status(200).json({ token });
+    setCookie("jwt", token, { req, res, maxAge: 60 * 60 * 24 });
+
+    return res.status(200).json({
+      id: user.id,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      city: user.city,
+      phone: user.phone,
+    });
   }
 
   return res.status(405).json({ message: "Method not allowed" });
